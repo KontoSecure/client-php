@@ -1,16 +1,27 @@
 <?php
 
-namespace PayClient;
+namespace KontoSecure;
 
-use PayClient\Request\CreateOrder as CreateOrderRequest;
-use PayClient\Response\CreateOrder as CreateOrderResponse;
-use PayClient\Request\GetOrder as GetOrderRequest;
-use PayClient\Response\GetOrder as GetOrderResponse;
+use KontoSecure\Request\CreateOrder as CreateOrderRequest;
+use KontoSecure\Response\CreateOrder as CreateOrderResponse;
+use KontoSecure\Request\GetOrder as GetOrderRequest;
+use KontoSecure\Response\GetOrder as GetOrderResponse;
 
+/**
+ * Class Client
+ * @package KontoSecure
+ */
 class Client extends BaseClient
 {
+    /**
+     * @var string
+     */
     protected $apiKey;
 
+    /**
+     * Client constructor.
+     * @param $apiKey
+     */
     public function __construct($apiKey)
     {
         parent::__construct();
@@ -35,6 +46,10 @@ class Client extends BaseClient
         return new CreateOrderResponse($result, $curlInfo);
     }
 
+    /**
+     * @param string $orderId
+     * @return GetOrderResponse
+     */
     public function getOrder($orderId)
     {
         curl_setopt($this->curlHandle, CURLOPT_CUSTOMREQUEST, GetOrderRequest::METHOD);

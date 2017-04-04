@@ -1,10 +1,10 @@
 <?php
 
-namespace PayClient\Response;
+namespace KontoSecure\Response;
 
-use PayClient\Model\Error;
+use KontoSecure\Model\Error;
 
-class CreateOrder
+class GetOrder
 {
     protected $rawResponse;
     protected $arrayResponse;
@@ -28,9 +28,39 @@ class CreateOrder
         return $this->arrayResponse['order_id'];
     }
 
-    public function getCheckoutUrl()
+    public function getAmount()
     {
-        return $this->arrayResponse['checkout_url'];
+        return $this->arrayResponse['amount'];
+    }
+
+    public function getClientEmail()
+    {
+        return $this->arrayResponse['client_email'];
+    }
+
+    public function getDescription()
+    {
+        return $this->arrayResponse['description'];
+    }
+
+    public function getIban()
+    {
+        return $this->arrayResponse['iban'];
+    }
+
+    public function getBic()
+    {
+        return $this->arrayResponse['bic'];
+    }
+
+    public function getShippingFee()
+    {
+        return $this->arrayResponse['shipping_fee'];
+    }
+
+    public function getState()
+    {
+        return $this->arrayResponse['state'];
     }
 
     public function getError()

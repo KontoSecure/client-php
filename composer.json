@@ -1,6 +1,6 @@
 {
-  "name": "kontosecure/client-php",
-  "description": "PHP Library for PAY",
+  "name": "kontosecure/kontosecure-client-php",
+  "description": "PHP client library for the KontoSecure API",
   "homepage": "http://www.konto-secure.de",
   "version": "1.0.0",
   "license": "MIT",

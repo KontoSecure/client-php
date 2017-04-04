@@ -1,10 +1,10 @@
 <?php
 
-namespace PayClient\Model;
+namespace KontoSecure\Model;
 
 /**
  * Class Error
- * @package PayClient\Model
+ * @package KontoSecure\Model
  */
 class Error
 {

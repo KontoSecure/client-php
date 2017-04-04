@@ -1,10 +1,10 @@
 <?php
 
-namespace PayClient;
+namespace KontoSecure;
 
 /**
  * Class BaseClient
- * @package PayClient
+ * @package KontoSecure
  */
 class BaseClient
 {
@@ -33,7 +33,7 @@ class BaseClient
         curl_setopt($this->curlHandle, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($this->curlHandle, CURLOPT_USERAGENT, "PayClient");
+        curl_setopt($this->curlHandle, CURLOPT_USERAGENT, "KontoSecure-PHP");
         curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->curlHandle, CURLOPT_URL, static::PAY_URL);
         curl_setopt($this->curlHandle, CURLOPT_CONNECTTIMEOUT, 15);

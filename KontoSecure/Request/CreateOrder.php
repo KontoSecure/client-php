@@ -1,16 +1,11 @@
 <?php
 
-namespace PayClient\Request;
+namespace KontoSecure\Request;
 
-class GetOrder
+class CreateOrder
 {
-    const URI = '/orders/%s';
-    const METHOD = 'GET';
-
-    /**
-     * @var string
-     */
-    protected $orderId;
+    const URI = '/orders';
+    const METHOD = 'POST';
 
     /**
      * @var float
@@ -33,11 +28,6 @@ class GetOrder
     protected $iban;
 
     /**
-     * @var string
-     */
-    protected $bic;
-
-    /**
      * @var float
      */
     protected $shippingFee;
@@ -45,31 +35,22 @@ class GetOrder
     /**
      * @var string
      */
-    protected $state;
+    protected $successUrl;
 
     /**
-     * Get orderId
-     *
-     * @return string
+     * @var string
      */
-    public function getOrderId()
-    {
-        return $this->orderId;
-    }
+    protected $failedUrl;
 
     /**
-     * Set orderId
-     *
-     * @param string $orderId
-     *
-     * @return $this
+     * @var string
      */
-    public function setOrderId($orderId)
-    {
-        $this->orderId = $orderId;
+    protected $canceledUrl;
 
-        return $this;
-    }
+    /**
+     * @var string
+     */
+    protected $webhookUrl;
 
     /**
      * Get amount
@@ -192,50 +173,113 @@ class GetOrder
     }
 
     /**
-     * Get bic
+     * Get successUrl
      *
      * @return string
      */
-    public function getBic()
+    public function getSuccessUrl()
     {
-        return $this->bic;
+        return $this->successUrl;
     }
 
     /**
-     * Set bic
+     * Set successUrl
      *
-     * @param string $bic
+     * @param string $successUrl
      *
      * @return $this
      */
-    public function setBic($bic)
+    public function setSuccessUrl($successUrl)
     {
-        $this->bic = $bic;
+        $this->successUrl = $successUrl;
 
         return $this;
     }
 
     /**
-     * Get state
+     * Get failedUrl
      *
      * @return string
      */
-    public function getState()
+    public function getFailedUrl()
     {
-        return $this->state;
+        return $this->failedUrl;
     }
 
     /**
-     * Set state
+     * Set failedUrl
      *
-     * @param string $state
+     * @param string $failedUrl
      *
      * @return $this
      */
-    public function setState($state)
+    public function setFailedUrl($failedUrl)
     {
-        $this->state = $state;
+        $this->failedUrl = $failedUrl;
 
         return $this;
+    }
+
+    /**
+     * Get canceledUrl
+     *
+     * @return string
+     */
+    public function getCanceledUrl()
+    {
+        return $this->canceledUrl;
+    }
+
+    /**
+     * Set canceledUrl
+     *
+     * @param string $canceledUrl
+     *
+     * @return $this
+     */
+    public function setCanceledUrl($canceledUrl)
+    {
+        $this->canceledUrl = $canceledUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get webhookUrl
+     *
+     * @return string
+     */
+    public function getWebhookUrl()
+    {
+        return $this->webhookUrl;
+    }
+
+    /**
+     * Set webhookUrl
+     *
+     * @param string $webhookUrl
+     *
+     * @return $this
+     */
+    public function setWebhookUrl($webhookUrl)
+    {
+        $this->webhookUrl = $webhookUrl;
+
+        return $this;
+    }
+
+    public function toArray()
+    {
+        return array(
+            'amount'      => $this->amount,
+            'clientEmail' => $this->clientEmail,
+            'description' => $this->description,
+            'iban'        => $this->iban,
+            'shippingFee' => $this->shippingFee,
+            'successUrl'  => $this->successUrl,
+            'failedUrl'   => $this->failedUrl,
+            'canceledUrl' => $this->canceledUrl,
+            'webhookUrl'  => $this->webhookUrl,
+        );
     }
 }
