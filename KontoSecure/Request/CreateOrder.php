@@ -2,6 +2,10 @@
 
 namespace KontoSecure\Request;
 
+/**
+ * Class CreateOrder
+ * @package KontoSecure\Request
+ */
 class CreateOrder
 {
     const URI = '/orders';
@@ -268,6 +272,9 @@ class CreateOrder
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return array(

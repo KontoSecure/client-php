@@ -2,73 +2,92 @@
 
 namespace KontoSecure\Response;
 
-use KontoSecure\Model\Error;
-
-class GetOrder
+/**
+ * Class GetOrder
+ * @package KontoSecure\Response
+ */
+class GetOrder extends BaseResponse
 {
-    protected $rawResponse;
-    protected $arrayResponse;
-    protected $success;
+    const STATE_CLOSED = 'closed';
+    const STATE_FAILED = 'failed';
 
-    public function __construct($rawResponse, array $curlInfo)
-    {
-        $this->rawResponse = $rawResponse;
-        $this->arrayResponse = json_decode($rawResponse, true);
-        $httpCode = $curlInfo['http_code'];
-        $this->success = (201 == $httpCode || 200 == $httpCode);
-    }
-
-    public function isSuccess()
-    {
-        return $this->success;
-    }
-
+    /**
+     * Gets the OrderId.
+     *
+     * @return string|null
+     */
     public function getOrderId()
     {
-        return $this->arrayResponse['order_id'];
+        return $this->getVal('order_id');
     }
 
+    /**
+     * Gets the amount.
+     *
+     * @return float|null
+     */
     public function getAmount()
     {
-        return $this->arrayResponse['amount'];
+        return $this->getVal('amount');
     }
 
+    /**
+     * Gets the clientEmail.
+     *
+     * @return string|null
+     */
     public function getClientEmail()
     {
-        return $this->arrayResponse['client_email'];
+        return $this->getVal('client_email');
     }
 
+    /**
+     * Gets the description.
+     *
+     * @return string|null
+     */
     public function getDescription()
     {
-        return $this->arrayResponse['description'];
+        return $this->getVal('description');
     }
 
+    /**
+     * Gets the IBAN.
+     *
+     * @return string|null
+     */
     public function getIban()
     {
-        return $this->arrayResponse['iban'];
+        return $this->getVal('iban');
     }
 
+    /**
+     * Gets the BIC.
+     *
+     * @return string|null
+     */
     public function getBic()
     {
-        return $this->arrayResponse['bic'];
+        return $this->getVal('bic');
     }
 
+    /**
+     * Gets the shippingFee.
+     *
+     * @return string|null
+     */
     public function getShippingFee()
     {
-        return $this->arrayResponse['shipping_fee'];
+        return $this->getVal('shipping_fee');
     }
 
+    /**
+     * Gets the state.
+     *
+     * @return string|null
+     */
     public function getState()
     {
-        return $this->arrayResponse['state'];
-    }
-
-    public function getError()
-    {
-        if ($this->success) {
-            return null;
-        }
-
-        return new Error($this->arrayResponse);
+        return $this->getVal('state');
     }
 }

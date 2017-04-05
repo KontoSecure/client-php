@@ -2,43 +2,29 @@
 
 namespace KontoSecure\Response;
 
-use KontoSecure\Model\Error;
-
-class CreateOrder
+/**
+ * Class CreateOrder
+ * @package KontoSecure\Response
+ */
+class CreateOrder extends BaseResponse
 {
-    protected $rawResponse;
-    protected $arrayResponse;
-    protected $success;
-
-    public function __construct($rawResponse, array $curlInfo)
-    {
-        $this->rawResponse = $rawResponse;
-        $this->arrayResponse = json_decode($rawResponse, true);
-        $httpCode = $curlInfo['http_code'];
-        $this->success = (201 == $httpCode || 200 == $httpCode);
-    }
-
-    public function isSuccess()
-    {
-        return $this->success;
-    }
-
+    /**
+     * Gets the OrderId.
+     *
+     * @return string|null
+     */
     public function getOrderId()
     {
-        return $this->arrayResponse['order_id'];
+        return $this->getVal('order_id');
     }
 
+    /**
+     * Gets the checkoutUrl.
+     *
+     * @return string|null
+     */
     public function getCheckoutUrl()
     {
-        return $this->arrayResponse['checkout_url'];
-    }
-
-    public function getError()
-    {
-        if ($this->success) {
-            return null;
-        }
-
-        return new Error($this->arrayResponse);
+        return $this->getVal('checkout_url');
     }
 }

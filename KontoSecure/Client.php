@@ -47,13 +47,17 @@ class Client extends BaseClient
     }
 
     /**
-     * @param string $orderId
+     * @param GetOrderRequest $order
      * @return GetOrderResponse
      */
-    public function getOrder($orderId)
+    public function getOrder(GetOrderRequest $order)
     {
         curl_setopt($this->curlHandle, CURLOPT_CUSTOMREQUEST, GetOrderRequest::METHOD);
-        curl_setopt($this->curlHandle, CURLOPT_URL, static::PAY_URL . sprintf(GetOrderRequest::URI, $orderId));
+        curl_setopt(
+            $this->curlHandle,
+            CURLOPT_URL,
+            static::PAY_URL . sprintf(GetOrderRequest::URI, $order->getOrderId())
+        );
 
         $result = curl_exec($this->curlHandle);
         $curlInfo = curl_getinfo($this->curlHandle);
