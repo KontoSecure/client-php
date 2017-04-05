@@ -8,8 +8,18 @@ namespace KontoSecure\Response;
  */
 class GetOrder extends BaseResponse
 {
+    const STATE_CREATED = 'created';
+    const STATE_PENDING = 'pending';
     const STATE_CLOSED = 'closed';
     const STATE_FAILED = 'failed';
+    const STATE_TIMEOUT = 'timeout';
+    const STATE_CANCELED = 'canceled';
+
+    const CANCELED_STEP_TIMEOUT = 'canceled_step_timeout';
+    const CANCELED_STEP_1 = 'canceled_step_1';
+    const CANCELED_STEP_2 = 'canceled_step_2';
+    const CANCELED_STEP_3 = 'canceled_step_3';
+
 
     /**
      * Gets the OrderId.
@@ -89,5 +99,15 @@ class GetOrder extends BaseResponse
     public function getState()
     {
         return $this->getVal('state');
+    }
+
+    /**
+     * Gets cancelPosition.
+     *
+     * @return string|null
+     */
+    public function getCancelPosition()
+    {
+        return $this->getVal('cancel_position');
     }
 }
