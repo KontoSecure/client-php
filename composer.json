@@ -1,22 +1,12 @@
 {
-  "name": "kontosecure/kontosecure-client-php",
-  "description": "PHP client library for the KontoSecure API",
-  "homepage": "http://www.konto-secure.de",
-  "version": "1.0.0",
-  "license": "MIT",
-  "autoload": {
-    "psr-0": {
-      "KontoSecure": "."
-    }
-  },
-
-  "require": {
-    "php": ">=5.3.2",
-    "psr/log": "~1.0"
-  },
-  "require-dev": {
-  },
-  "suggest": {
-    "monolog/monolog": "Allow sending log messages to a variety of different handlers"
-  }
+    "name": "kontosecure/kontosecure-client-php",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Markus Schindler",
+            "email": "markus.schindler1@googlemail.com"
+        }
+    ],
+    "require": {}
 }
