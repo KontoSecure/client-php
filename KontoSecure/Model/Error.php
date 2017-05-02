@@ -11,12 +11,12 @@ class Error
     /**
      * @var string|null
      */
-    protected $type;
+    protected $code;
 
     /**
      * @var string|null
      */
-    protected $title;
+    protected $message;
 
     /**
      * @var array
@@ -29,29 +29,31 @@ class Error
      */
     public function __construct(array $response)
     {
-        $this->type = isset($response['type']) ? $response['type'] : null;
-        $this->title = isset($response['title']) ? $response['title'] : null;
-        $this->errors = isset($response['errors']) ? $response['errors'] : array();
+        $errorData = isset($response['error']) ? $response['error'] : $response;
+
+        $this->code    = isset($errorData['code'])    ? $errorData['code'] : null;
+        $this->message = isset($errorData['message']) ? $errorData['message'] : null;
+        $this->errors  = isset($errorData['errors'])  ? $errorData['errors'] : array();
     }
 
     /**
-     * Get type
+     * Get code
      *
-     * @return mixed|null
+     * @return null|string
      */
-    public function getType()
+    public function getCode()
     {
-        return $this->type;
+        return $this->code;
     }
 
     /**
-     * Get title
+     * Get message
      *
-     * @return mixed|null
+     * @return null|string
      */
-    public function getTitle()
+    public function getMessage()
     {
-        return $this->title;
+        return $this->message;
     }
 
     /**
@@ -70,9 +72,9 @@ class Error
     public function toArray()
     {
         return array(
-            'type'   => $this->type,
-            'title'  => $this->title,
-            'errors' => $this->errors,
+            'code'    => $this->code,
+            'message' => $this->message,
+            'errors'  => $this->errors,
         );
     }
 }

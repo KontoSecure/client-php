@@ -13,6 +13,9 @@ use KontoSecure\Response\GetOrder as GetOrderResponse;
  */
 class Client extends BaseClient
 {
+    const VERSION_HEADER = 'X-Accept-Version';
+    const VERSION_V1 = 'v1';
+
     /**
      * @var string
      */
@@ -20,13 +23,19 @@ class Client extends BaseClient
 
     /**
      * Client constructor.
-     * @param $apiKey
+     * @param string $apiKey
+     * @param string $apiVersion
      */
-    public function __construct($apiKey)
+    public function __construct($apiKey, $apiVersion = self::VERSION_V1)
     {
         parent::__construct();
+
         $this->apiKey = $apiKey;
-        $header = array("cache-control: no-cache", 'Api-Key: ' . $apiKey);
+        $header = array(
+            "cache-control: no-cache",
+            'Api-Key: ' . $apiKey,
+            static::VERSION_HEADER . ': ' . $apiVersion,
+        );
         curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, $header);
     }
 

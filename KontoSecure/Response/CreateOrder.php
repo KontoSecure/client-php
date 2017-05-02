@@ -27,4 +27,16 @@ class CreateOrder extends BaseResponse
     {
         return $this->getVal('checkout_url');
     }
+
+    /**
+     * Gets the order security token.
+     * Can be used to later on verify the incoming webhook call.
+     * This token is private and should not be exposed to the outside.
+     *
+     * @return string|null
+     */
+    public function getSecurityToken()
+    {
+        return $this->getVal('security_token');
+    }
 }
