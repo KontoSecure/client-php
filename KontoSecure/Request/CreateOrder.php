@@ -2,6 +2,8 @@
 
 namespace KontoSecure\Request;
 
+use KontoSecure\Exception\InvalidArgumentException;
+
 /**
  * Class CreateOrder
  * @package KontoSecure\Request
@@ -55,6 +57,11 @@ class CreateOrder
      * @var string
      */
     protected $webhookUrl;
+
+    /**
+     * @var array
+     */
+    protected $customFields;
 
     /**
      * Get amount
@@ -273,20 +280,88 @@ class CreateOrder
     }
 
     /**
+     * @param string $key
+     * @param string $value
+     * @return $this
+     */
+    public function addCustomField($key, $value)
+    {
+        $this->assertCustomFieldKey($key, __METHOD__);
+        $this->assertCustomFieldValue($value, __METHOD__);
+
+        $this->customFields[$key] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param array $customFields
+     * @return $this
+     */
+    public function setCustomFields(array $customFields)
+    {
+        foreach ($customFields as $key => $value) {
+            $this->assertCustomFieldKey($key, __METHOD__);
+            $this->assertCustomFieldValue($value, __METHOD__);
+        }
+
+        $this->customFields = $customFields;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $key
+     * @param string $method
+     * @throws InvalidArgumentException
+     */
+    protected function assertCustomFieldKey($key, $method)
+    {
+        if (!is_string($key)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    '%s $key must be of type string. %s given.',
+                    $method,
+                    gettype($key)
+                )
+            );
+        }
+    }
+
+    /**
+     * @param mixed $value
+     * @param string $method
+     * @throws InvalidArgumentException
+     */
+    protected function assertCustomFieldValue($value, $method)
+    {
+        if (!is_string($value)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    '%s $value must be of type string. %s given.',
+                    $method,
+                    gettype($value)
+                )
+            );
+        }
+    }
+
+    /**
      * @return array
      */
     public function toArray()
     {
         return array(
-            'amount'      => $this->amount,
-            'clientEmail' => $this->clientEmail,
-            'description' => $this->description,
-            'iban'        => $this->iban,
-            'shippingFee' => $this->shippingFee,
-            'successUrl'  => $this->successUrl,
-            'failedUrl'   => $this->failedUrl,
-            'canceledUrl' => $this->canceledUrl,
-            'webhookUrl'  => $this->webhookUrl,
+            'amount'       => $this->amount,
+            'clientEmail'  => $this->clientEmail,
+            'description'  => $this->description,
+            'iban'         => $this->iban,
+            'shippingFee'  => $this->shippingFee,
+            'successUrl'   => $this->successUrl,
+            'failedUrl'    => $this->failedUrl,
+            'canceledUrl'  => $this->canceledUrl,
+            'webhookUrl'   => $this->webhookUrl,
+            'customFields' => $this->customFields,
         );
     }
 }

@@ -8,7 +8,12 @@ namespace KontoSecure;
  */
 class BaseClient
 {
-    const PAY_URL = 'https://api.konto-secure.de';
+    const API_URL = 'https://api.konto-secure.de';
+
+    /**
+     * @var null|string
+     */
+    protected $baseUrl;
 
     /**
      * @var resource CurlHandle
@@ -17,9 +22,11 @@ class BaseClient
 
     /**
      * BaseClient constructor.
+     * @param string|null $baseUrl
      */
-    public function __construct()
+    public function __construct($baseUrl = null)
     {
+        $this->baseUrl = (null == $baseUrl ? static::API_URL : $baseUrl);
         $this->init();
     }
 
@@ -35,7 +42,7 @@ class BaseClient
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($this->curlHandle, CURLOPT_USERAGENT, "KontoSecure-PHP");
         curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($this->curlHandle, CURLOPT_URL, static::PAY_URL);
+        curl_setopt($this->curlHandle, CURLOPT_URL, $this->baseUrl);
         curl_setopt($this->curlHandle, CURLOPT_CONNECTTIMEOUT, 15);
         curl_setopt($this->curlHandle, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($this->curlHandle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);

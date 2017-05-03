@@ -25,10 +25,11 @@ class Client extends BaseClient
      * Client constructor.
      * @param string $apiKey
      * @param string $apiVersion
+     * @param string|null $baseUrl
      */
-    public function __construct($apiKey, $apiVersion = self::VERSION_V1)
+    public function __construct($apiKey, $apiVersion = self::VERSION_V1, $baseUrl = null)
     {
-        parent::__construct();
+        parent::__construct($baseUrl);
 
         $this->apiKey = $apiKey;
         $header = array(
@@ -45,7 +46,7 @@ class Client extends BaseClient
      */
     public function createOrder(CreateOrderRequest $order)
     {
-        curl_setopt($this->curlHandle, CURLOPT_URL, static::PAY_URL . CreateOrderRequest::URI);
+        curl_setopt($this->curlHandle, CURLOPT_URL, $this->baseUrl . CreateOrderRequest::URI);
         curl_setopt($this->curlHandle, CURLOPT_CUSTOMREQUEST, CreateOrderRequest::METHOD);
         curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, http_build_query($order->toArray()));
 
@@ -65,7 +66,7 @@ class Client extends BaseClient
         curl_setopt(
             $this->curlHandle,
             CURLOPT_URL,
-            static::PAY_URL . sprintf(GetOrderRequest::URI, $order->getOrderId())
+            $this->baseUrl . sprintf(GetOrderRequest::URI, $order->getOrderId())
         );
 
         $result = curl_exec($this->curlHandle);
