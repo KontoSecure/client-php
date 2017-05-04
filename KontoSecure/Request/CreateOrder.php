@@ -14,6 +14,11 @@ class CreateOrder
     const METHOD = 'POST';
 
     /**
+     * @var string
+     */
+    protected $subMerchantApiKey;
+
+    /**
      * @var float
      */
     protected $amount;
@@ -62,6 +67,30 @@ class CreateOrder
      * @var array
      */
     protected $customFields;
+
+    /**
+     * Get subMerchantApiKey
+     *
+     * @return string
+     */
+    public function getSubMerchantApiKey()
+    {
+        return $this->subMerchantApiKey;
+    }
+
+    /**
+     * Set subMerchantApiKey
+     *
+     * @param string $subMerchantApiKey
+     *
+     * @return $this
+     */
+    public function setSubMerchantApiKey($subMerchantApiKey)
+    {
+        $this->subMerchantApiKey = $subMerchantApiKey;
+
+        return $this;
+    }
 
     /**
      * Get amount
@@ -352,16 +381,17 @@ class CreateOrder
     public function toArray()
     {
         return array(
-            'amount'       => $this->amount,
-            'clientEmail'  => $this->clientEmail,
-            'description'  => $this->description,
-            'iban'         => $this->iban,
-            'shippingFee'  => $this->shippingFee,
-            'successUrl'   => $this->successUrl,
-            'failedUrl'    => $this->failedUrl,
-            'canceledUrl'  => $this->canceledUrl,
-            'webhookUrl'   => $this->webhookUrl,
-            'customFields' => $this->customFields,
+            'subMerchantApiKey' => $this->subMerchantApiKey,
+            'amount'            => $this->amount,
+            'clientEmail'       => $this->clientEmail,
+            'description'       => $this->description,
+            'iban'              => $this->iban,
+            'shippingFee'       => $this->shippingFee,
+            'successUrl'        => $this->successUrl,
+            'failedUrl'         => $this->failedUrl,
+            'canceledUrl'       => $this->canceledUrl,
+            'webhookUrl'        => $this->webhookUrl,
+            'customFields'      => $this->customFields,
         );
     }
 }
