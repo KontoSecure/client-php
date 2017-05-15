@@ -13,6 +13,8 @@ use KontoSecure\Response\GetOrder as GetOrderResponse;
  */
 class Client extends BaseClient
 {
+    const API_KEY_HEADER = 'Api-Key';
+    const SUB_API_KEY_HEADER = 'Sub-Api-Key';
     const VERSION_HEADER = 'X-Accept-Version';
     const VERSION_V1 = 'v1';
 
@@ -20,6 +22,11 @@ class Client extends BaseClient
      * @var string
      */
     protected $apiKey;
+
+    /**
+     * @var array
+     */
+    protected $header = array();
 
     /**
      * Client constructor.
@@ -32,12 +39,16 @@ class Client extends BaseClient
         parent::__construct($baseUrl);
 
         $this->apiKey = $apiKey;
-        $header = array(
+        $this->header = array(
             "cache-control: no-cache",
-            'Api-Key: ' . $apiKey,
+            static::API_KEY_HEADER . ': ' . $apiKey,
             static::VERSION_HEADER . ': ' . $apiVersion,
         );
-        curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, $header);
+    }
+
+    public function setSubApiKey($subApiKey)
+    {
+        $this->header[] = static::SUB_API_KEY_HEADER . ': ' . $subApiKey;
     }
 
     /**
@@ -46,6 +57,7 @@ class Client extends BaseClient
      */
     public function createOrder(CreateOrderRequest $order)
     {
+        curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, $this->header);
         curl_setopt($this->curlHandle, CURLOPT_URL, $this->baseUrl . CreateOrderRequest::URI);
         curl_setopt($this->curlHandle, CURLOPT_CUSTOMREQUEST, CreateOrderRequest::METHOD);
         curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, http_build_query($order->toArray()));
@@ -62,6 +74,7 @@ class Client extends BaseClient
      */
     public function getOrder(GetOrderRequest $order)
     {
+        curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, $this->header);
         curl_setopt($this->curlHandle, CURLOPT_CUSTOMREQUEST, GetOrderRequest::METHOD);
         curl_setopt(
             $this->curlHandle,
