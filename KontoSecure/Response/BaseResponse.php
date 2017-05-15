@@ -21,6 +21,11 @@ class BaseResponse
     protected $arrayResponse;
 
     /**
+     * @var array|null
+     */
+    protected $curlInfo;
+
+    /**
      * @var bool
      */
     protected $success;
@@ -34,6 +39,7 @@ class BaseResponse
     {
         $this->rawResponse = $rawResponse;
         $this->arrayResponse = json_decode($rawResponse, true);
+        $this->curlInfo = $curlInfo;
         $httpCode = $curlInfo['http_code'];
         $this->success = ($httpCode >= 200 && $httpCode <= 399);
     }
@@ -57,6 +63,36 @@ class BaseResponse
         }
 
         return new Error($this->arrayResponse);
+    }
+
+    /**
+     * Get rawResponse
+     *
+     * @return string
+     */
+    public function getRawResponse()
+    {
+        return $this->rawResponse;
+    }
+
+    /**
+     * Get arrayResponse
+     *
+     * @return array
+     */
+    public function getArrayResponse()
+    {
+        return $this->arrayResponse;
+    }
+
+    /**
+     * Get curlInfo
+     *
+     * @return array|null
+     */
+    public function getCurlInfo()
+    {
+        return $this->curlInfo;
     }
 
     /**
