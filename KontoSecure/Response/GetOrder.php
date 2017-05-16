@@ -31,6 +31,18 @@ class GetOrder extends BaseResponse
     }
 
     /**
+     * Gets transaction ID.
+     *
+     * @return string|null
+     */
+    public function getTransactionId()
+    {
+        $transaction = $this->getVal('transaction');
+
+        return $this->getVal('identifier', null, $transaction);
+    }
+
+    /**
      * Gets the security token for this order.
      *
      * @return string|null

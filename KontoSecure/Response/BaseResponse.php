@@ -99,14 +99,21 @@ class BaseResponse
      * Gets a field from the response.
      * @param string $fieldName
      * @param mixed|null $default
+     * @param array|null $data
      * @return mixed|null
      */
-    protected function getVal($fieldName, $default = null)
+    protected function getVal($fieldName, $default = null, $data = null)
     {
+        if (!is_array($data)) {
+            $data = null;
+        }
+
+        $data = null !== $data ? $data : $this->arrayResponse;
+
         if (!is_scalar($fieldName)) {
             $return = $default;
         } else {
-            $return = isset($this->arrayResponse[$fieldName]) ? $this->arrayResponse[$fieldName] : $default;
+            $return = isset($data[$fieldName]) ? $data[$fieldName] : $default;
         }
 
         return $return;
