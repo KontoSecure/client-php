@@ -20,7 +20,6 @@ class GetOrder extends BaseResponse
     const CANCELED_STEP_2 = 'canceled_step_2';
     const CANCELED_STEP_3 = 'canceled_step_3';
 
-
     /**
      * Gets the OrderId.
      *
@@ -29,6 +28,16 @@ class GetOrder extends BaseResponse
     public function getOrderId()
     {
         return $this->getVal('order_id');
+    }
+
+    /**
+     * Gets the security token for this order.
+     *
+     * @return string|null
+     */
+    public function getSecurityToken()
+    {
+        return $this->getVal('security_token');
     }
 
     /**
@@ -42,13 +51,13 @@ class GetOrder extends BaseResponse
     }
 
     /**
-     * Gets the clientEmail.
+     * Gets the shippingFee.
      *
      * @return string|null
      */
-    public function getClientEmail()
+    public function getShippingFee()
     {
-        return $this->getVal('client_email');
+        return $this->getVal('shipping_fee');
     }
 
     /**
@@ -59,6 +68,37 @@ class GetOrder extends BaseResponse
     public function getDescription()
     {
         return $this->getVal('description');
+    }
+
+    /**
+     * Gets the clientEmail.
+     *
+     * @return string|null
+     */
+    public function getClientEmail()
+    {
+        return $this->getVal('client_email');
+    }
+
+    /**
+     * Gets the state.
+     *
+     * @return string|null
+     */
+    public function getState()
+    {
+        return $this->getVal('state');
+    }
+
+    /**
+     * Gets the error code.
+     * "0" for undefined or no error.
+     *
+     * @return string|null
+     */
+    public function getErrorCode()
+    {
+        return $this->getVal('error_code');
     }
 
     /**
@@ -82,26 +122,6 @@ class GetOrder extends BaseResponse
     }
 
     /**
-     * Gets the shippingFee.
-     *
-     * @return string|null
-     */
-    public function getShippingFee()
-    {
-        return $this->getVal('shipping_fee');
-    }
-
-    /**
-     * Gets the state.
-     *
-     * @return string|null
-     */
-    public function getState()
-    {
-        return $this->getVal('state');
-    }
-
-    /**
      * Gets cancelPosition.
      *
      * @return string|null
@@ -109,5 +129,45 @@ class GetOrder extends BaseResponse
     public function getCancelPosition()
     {
         return $this->getVal('cancel_position');
+    }
+
+    /**
+     * Gets the success redirect URL.
+     *
+     * @return string|null
+     */
+    public function getSuccessUrl()
+    {
+        return $this->getVal('success_url');
+    }
+
+    /**
+     * Gets the failed redirect URL.
+     *
+     * @return string|null
+     */
+    public function getFailedUrl()
+    {
+        return $this->getVal('failed_url');
+    }
+
+    /**
+     * Gets the canceled redirect URL.
+     *
+     * @return string|null
+     */
+    public function getCanceledUrl()
+    {
+        return $this->getVal('canceled_url');
+    }
+
+    /**
+     * Gets the custom fields, transmitted with the order POST request.
+     *
+     * @return array|null
+     */
+    public function getCustomFields()
+    {
+        return $this->getVal('custom_fields');
     }
 }
