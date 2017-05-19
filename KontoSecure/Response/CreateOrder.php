@@ -2,6 +2,8 @@
 
 namespace KontoSecure\Response;
 
+use DateTime;
+
 /**
  * Class CreateOrder
  * @package KontoSecure\Response
@@ -38,5 +40,17 @@ class CreateOrder extends BaseResponse
     public function getSecurityToken()
     {
         return $this->getVal('security_token');
+    }
+
+    /**
+     * Gets the date until the checkout url can be opened and processed.
+     *
+     * @return DateTime
+     */
+    public function getValidUntil()
+    {
+        $date = $this->getVal('valid_until');
+
+        return new DateTime($date);
     }
 }

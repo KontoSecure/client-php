@@ -2,6 +2,7 @@
 
 namespace KontoSecure\Request;
 
+use DateTime;
 use KontoSecure\Exception\InvalidArgumentException;
 
 /**
@@ -67,6 +68,11 @@ class CreateOrder
      * @var array
      */
     protected $customFields;
+
+    /**
+     * @var DateTime
+     */
+    protected $validUntil;
 
     /**
      * Get subMerchantApiKey
@@ -340,6 +346,30 @@ class CreateOrder
     }
 
     /**
+     * Get validUntil
+     *
+     * @return DateTime|null
+     */
+    public function getValidUntil()
+    {
+        return $this->validUntil;
+    }
+
+    /**
+     * Set validUntil
+     *
+     * @param DateTime $validUntil
+     *
+     * @return $this
+     */
+    public function setValidUntil(DateTime $validUntil)
+    {
+        $this->validUntil = $validUntil;
+
+        return $this;
+    }
+
+    /**
      * @param mixed $key
      * @param string $method
      * @throws InvalidArgumentException
@@ -392,6 +422,7 @@ class CreateOrder
             'canceledUrl'       => $this->canceledUrl,
             'webhookUrl'        => $this->webhookUrl,
             'customFields'      => $this->customFields,
+            'validUntil'        => $this->validUntil ? $this->validUntil->format('Y-m-d H:i:s') : null,
         );
     }
 }
