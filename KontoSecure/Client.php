@@ -46,6 +46,23 @@ class Client extends BaseClient
         );
     }
 
+    /**
+     * Enables the test mode.
+     *
+     * @return $this
+     */
+    public function enableTestMode()
+    {
+        $this->baseUrl = static::TEST_API_URL;
+
+        return $this;
+    }
+
+    /**
+     * Sets the sub api key.
+     *
+     * @param string $subApiKey
+     */
     public function setSubApiKey($subApiKey)
     {
         $this->header[] = static::SUB_API_KEY_HEADER . ': ' . $subApiKey;

@@ -10,6 +10,8 @@ class BaseClient
 {
     const API_URL = 'https://api.konto-secure.de';
 
+    const TEST_API_URL = 'https://test-api.konto-secure.de';
+
     /**
      * @var null|string
      */
