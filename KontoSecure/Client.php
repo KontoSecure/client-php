@@ -6,6 +6,8 @@ use KontoSecure\Request\CreateOrder as CreateOrderRequest;
 use KontoSecure\Response\CreateOrder as CreateOrderResponse;
 use KontoSecure\Request\GetOrder as GetOrderRequest;
 use KontoSecure\Response\GetOrder as GetOrderResponse;
+use KontoSecure\Request\CreateMerchant as CreateMerchantRequest;
+use KontoSecure\Response\CreateMerchant as CreateMerchantResponse;
 
 /**
  * Class Client
@@ -103,5 +105,22 @@ class Client extends BaseClient
         $curlInfo = curl_getinfo($this->curlHandle);
 
         return new GetOrderResponse($result, $curlInfo);
+    }
+
+    /**
+     * @param CreateMerchantRequest $merchant
+     * @return CreateMerchantResponse
+     */
+    public function createMerchant(CreateMerchantRequest $merchant)
+    {
+        curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, $this->header);
+        curl_setopt($this->curlHandle, CURLOPT_URL, $this->baseUrl . CreateMerchantRequest::URI);
+        curl_setopt($this->curlHandle, CURLOPT_CUSTOMREQUEST, CreateMerchantRequest::METHOD);
+        curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, http_build_query($merchant->toArray()));
+
+        $result = curl_exec($this->curlHandle);
+        $curlInfo = curl_getinfo($this->curlHandle);
+
+        return new CreateMerchantResponse($result, $curlInfo);
     }
 }
