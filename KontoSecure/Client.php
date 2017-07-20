@@ -8,6 +8,7 @@ use KontoSecure\Request\GetOrder as GetOrderRequest;
 use KontoSecure\Response\GetOrder as GetOrderResponse;
 use KontoSecure\Request\CreateMerchant as CreateMerchantRequest;
 use KontoSecure\Response\CreateMerchant as CreateMerchantResponse;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class Client
@@ -29,6 +30,11 @@ class Client extends BaseClient
      * @var array
      */
     protected $header = array();
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
 
     /**
      * Client constructor.
@@ -121,6 +127,39 @@ class Client extends BaseClient
         $result = curl_exec($this->curlHandle);
         $curlInfo = curl_getinfo($this->curlHandle);
 
+        if($this->logger) {
+            $this->logger->debug('Create merchant response', [
+                'class' => __CLASS__,
+                'method' => __METHOD__,
+                'response' => json_encode($result),
+                'curl_info' => json_encode($curlInfo)
+            ]);
+        }
+
         return new CreateMerchantResponse($result, $curlInfo);
+    }
+
+    /**
+     * Get Logger
+     *
+     * @return LoggerInterface
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     * Set Logger
+     *
+     * @param LoggerInterface $logger
+     *
+     * @return $this
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+
+        return $this;
     }
 }
